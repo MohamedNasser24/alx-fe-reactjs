@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
-import './App.css';
-import WelcomeMessage from './components/WelcomeMessage';
+import React from 'react';
+import Header from './components/Header';
+import MainContent from './components/MainContent';
+import Footer from './components/Footer';
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
         <div className="App">
-            <WelcomeMessage />
-            <div>
-                <h1>Welcome to ALX React App!</h1>
-                <p>The current count is {count}</p>
-                <button onClick={() => setCount(count + 1)}>Increment</button>
-            </div>
+            <Header />
+            <MainContent />
+            <Footer />
         </div>
     );
 }
+
 export default App;
