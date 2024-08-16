@@ -1,4 +1,11 @@
 // src/UserDetails.jsx
+import React from 'react';
+import UserDetails from './UserDetails';
+
+function UserInfo() {
+  return <UserDetails />;
+}
+
 import React, { useContext } from 'react';
 import UserContext from './UserContext';
 
@@ -14,4 +21,3 @@ function UserDetails() {
 }
 
 export default UserDetails;
-

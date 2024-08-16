@@ -1,10 +1,8 @@
-// src/UserContext.js
-import React, { createContext } from 'react';
+import React from 'react';
+import UserInfo from './UserInfo';
 
-// Create the UserContext
-const UserContext = createContext();
+function ProfilePage() {
+  return <UserInfo />;
+}
 
-// Export the UserProvider
-export const UserProvider = UserContext.Provider;
-export default UserContext;
-
+export default ProfilePage;
