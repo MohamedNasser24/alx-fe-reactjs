@@ -1,17 +1,11 @@
-import React, { useContext } from 'react';
-import UserContext from '../UserContext'; // Ensure the correct import path
+import React, { createContext } from 'react';
 
-function UserDetails() {
-  const userData = useContext(UserContext);
+// Create the UserContext
+const UserContext = createContext();
 
-  return (
-    <div>
-      <p>Name: {userData.name}</p>
-      <p>Email: {userData.email}</p>
-    </div>
-  );
-}
+// Export the UserProvider
+export const UserProvider = UserContext.Provider;
+export default UserContext;
 
-export default UserDetails;
 
 
