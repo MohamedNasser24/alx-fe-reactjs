@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from 'react';
 import ProfilePage from './ProfilePage';
 import UserContext, { UserProvider } from './UserContext';
@@ -13,3 +14,4 @@ function App() {
 }
 
 export default App;
+
