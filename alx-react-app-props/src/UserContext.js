@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import UserContext from '../UserContext'; // Adjust the import path if needed
+import UserContext from '../UserContext'; // Ensure the correct import path
 
 function UserDetails() {
   const userData = useContext(UserContext);
@@ -13,3 +13,5 @@ function UserDetails() {
 }
 
 export default UserDetails;
+
+
