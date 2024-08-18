@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
 function Counter() {
-  // Initialize the state
+  // Initialize state with useState
   const [count, setCount] = useState(0);
 
-  // Render the component
   return (
     <div>
       <p>Current Count: {count}</p>

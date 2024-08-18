@@ -1,14 +1,12 @@
 import React from 'react';
-import ProfilePage from './ProfilePage';
-import { UserProvider } from './components/UserContext';
+import Counter from './components/Counter';
 
 function App() {
-  const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
-
   return (
-    <UserProvider userData={userData}>
-      <ProfilePage />
-    </UserProvider>
+    <div>
+      <h1>Counter Application</h1>
+      <Counter />
+    </div>
   );
 }
 
