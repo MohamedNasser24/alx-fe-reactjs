@@ -1,6 +1,6 @@
 import React from 'react';
-import ProfilePage from './ProfilePage';
-import { UserProvider } from './UserContext'; // Import UserProvider
+import ProfilePage from '../ProfilePage';
+import { UserProvider } from '../UserContext'; // Import UserProvider
 
 function App() {
   // Define the user data to be provided through context
