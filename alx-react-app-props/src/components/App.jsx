@@ -1,15 +1,13 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ProfilePage from './ProfilePage';
 import { UserProvider } from './UserContext';
 
-function App() {
-  const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
+const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
 
-  return (
-    <UserProvider userData={userData}>
-      <ProfilePage />
-    </UserProvider>
-  );
-}
-
-export default App;
+ReactDOM.render(
+  <UserProvider userData={userData}>
+    <ProfilePage />
+  </UserProvider>,
+  document.getElementById('root')
+);
