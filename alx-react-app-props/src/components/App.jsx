@@ -1,13 +1,13 @@
 import React from 'react';
 import ProfilePage from './ProfilePage';
-import { UserProvider } from './UserContext'; // Import the UserProvider
+import { UserProvider } from './UserContext'; // Import UserProvider
 
 function App() {
-  // Define the user data that you want to provide to the context
+  // Define the user data to be provided through context
   const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
 
   return (
-    <UserProvider userData={userData}> {/* Wrap your components with UserProvider */}
+    <UserProvider userData={userData}> {/* Wrap ProfilePage with UserProvider */}
       <ProfilePage />
     </UserProvider>
   );
