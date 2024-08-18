@@ -1,9 +1,9 @@
 import React, { createContext } from 'react';
 
-// Create the context
+// Create the UserContext
 const UserContext = createContext();
 
-// Create a provider component
+// Create the UserProvider component
 export const UserProvider = ({ children, userData }) => {
   return (
     <UserContext.Provider value={userData}>
