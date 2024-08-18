@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-// Create a Context for user data
+// Create Context for user data
 const UserContext = createContext();
 
 // Create a Provider component
@@ -12,4 +12,4 @@ export const UserProvider = ({ children, userData }) => {
   );
 };
 
-export default UserContext;
+export default UserContext
