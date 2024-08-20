@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import useRecipeStore from '../recipeStore';
-import useRecipeStore from '../recipeStore'; // Move up one directory from components to src
+import useRecipeStore from './recipeStore';
+import useRecipeStore from './recipeStore'; // Move up one directory from components to src
 
 const AddRecipeForm = () => {
   const addRecipe = useRecipeStore((state) => state.addRecipe);
