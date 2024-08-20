@@ -2,9 +2,10 @@ import React from 'react';
 import useRecipeStore from './recipeStore';
 
 const RecipeList = () => {
-  const { recipes, searchTerm } = useRecipeStore(state => ({
+  const { recipes, searchTerm, setSearchTerm } = useRecipeStore(state => ({
     recipes: state.recipes,
-    searchTerm: state.searchTerm
+    searchTerm: state.searchTerm,
+    setSearchTerm: state.setSearchTerm
   }));
 
   // Filter recipes based on searchTerm
@@ -19,7 +20,7 @@ const RecipeList = () => {
       <input
         type="text"
         placeholder="Search..."
-        onChange={(e) => useRecipeStore.getState().setSearchTerm(e.target.value)}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div>
         {filteredRecipes.map(recipe => (
