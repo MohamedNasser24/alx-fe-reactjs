@@ -10,8 +10,9 @@ const App = () => {
       <div>
         <h1>Recipe Sharing App</h1>
         <Routes>
-          <Route path="/" element={<><AddRecipeForm /><RecipeList /></>} />
+          <Route path="/" element={<RecipeList />} />
           <Route path="/recipes/:id" element={<RecipeDetails />} />
+          <Route path="/add-recipe" element={<AddRecipeForm />} /> {/* Add a route for AddRecipeForm */}
         </Routes>
       </div>
     </Router>
