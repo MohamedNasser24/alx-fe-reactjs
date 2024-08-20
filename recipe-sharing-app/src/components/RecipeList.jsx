@@ -1,6 +1,6 @@
 // src/components/RecipeList.jsx
 import React from 'react';
-import useRecipeStore from '../recipeStore';
+import useRecipeStore from '../recipeStore'; // Import from parent directory
 
 const RecipeList = () => {
   const recipes = useRecipeStore((state) => state.recipes);

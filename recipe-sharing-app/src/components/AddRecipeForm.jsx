@@ -1,6 +1,6 @@
 // src/components/AddRecipeForm.jsx
 import React, { useState } from 'react';
-import useRecipeStore from '../recipeStore';
+import useRecipeStore from '../recipeStore'; // Import from parent directory
 
 const AddRecipeForm = () => {
   const addRecipe = useRecipeStore((state) => state.addRecipe);
