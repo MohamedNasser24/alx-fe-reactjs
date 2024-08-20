@@ -10,6 +10,9 @@ const useRecipeStore = create((set) => ({
     recipes: [...state.recipes, newRecipe],
   })),
 
+  // Action to set the recipes
+  setRecipes: (recipes) => set({ recipes }),
+
   // Action to set the search term
   setSearchTerm: (term) => set({ searchTerm: term }),
 
@@ -21,4 +24,4 @@ const useRecipeStore = create((set) => ({
   })),
 }));
 
-export default useRecipeStore
+export default useRecipeStore;
