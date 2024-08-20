@@ -1,34 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useRecipeStore from './recipeStore';
+import SearchBar from './SearchBar';
 
 const RecipeList = () => {
-  const { recipes, searchTerm, setSearchTerm } = useRecipeStore(state => ({
+  const { filteredRecipes, recipes, filterRecipes } = useRecipeStore(state => ({
+    filteredRecipes: state.filteredRecipes,
     recipes: state.recipes,
-    searchTerm: state.searchTerm,
-    setSearchTerm: state.setSearchTerm
+    filterRecipes: state.filterRecipes
   }));
 
-  // Filter recipes based on searchTerm
-  const filteredRecipes = recipes.filter(recipe =>
-    recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    recipe.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Trigger filtering when recipes or search term changes
+  useEffect(() => {
+    filterRecipes();
+  }, [filterRecipes, recipes]);
 
   return (
     <div>
       <h2>Recipe List</h2>
-      <input
-        type="text"
-        placeholder="Search..."
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <SearchBar />
       <div>
-        {filteredRecipes.map(recipe => (
-          <div key={recipe.id}>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-          </div>
-        ))}
+        {filteredRecipes.length > 0 ? (
+          filteredRecipes.map(recipe => (
+            <div key={recipe.id}>
+              <h3>{recipe.title}</h3>
+              <p>{recipe.description}</p>
+            </div>
+          ))
+        ) : (
+          <p>No recipes found</p>
+        )}
       </div>
     </div>
   );
