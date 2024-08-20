@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App'; // Import the App component
-import './index.css'; // Optional: Import your CSS file if you have one
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import App from './App';
+import RecipeDetails from './components/RecipeDetails';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App /> {/* Use the App component */}
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
+      </Routes>
+    </Router>
   </React.StrictMode>,
 );
