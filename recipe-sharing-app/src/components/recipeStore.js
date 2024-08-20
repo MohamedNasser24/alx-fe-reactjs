@@ -1,9 +1,9 @@
 import create from 'zustand';
 
 const useRecipeStore = create((set) => ({
-  recipes: [], // Initial state for recipes
-  searchTerm: '', // For search functionality
-  filteredRecipes: [], // To store filtered recipes
+  recipes: [],
+  searchTerm: '',
+  filteredRecipes: [],
 
   // Action to add a new recipe
   addRecipe: (newRecipe) => set((state) => ({
@@ -21,6 +21,18 @@ const useRecipeStore = create((set) => ({
     filteredRecipes: state.recipes.filter((recipe) =>
       recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
     ),
+  })),
+
+  // Action to update an existing recipe
+  updateRecipe: (updatedRecipe) => set((state) => ({
+    recipes: state.recipes.map((recipe) =>
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+    ),
+  })),
+
+  // Action to delete a recipe
+  deleteRecipe: (recipeId) => set((state) => ({
+    recipes: state.recipes.filter((recipe) => recipe.id !== recipeId),
   })),
 }));
 
