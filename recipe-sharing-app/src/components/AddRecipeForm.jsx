@@ -1,28 +1,45 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AddRecipeForm from './AddRecipeForm';
-import RecipeList from './RecipeList';
-import RecipeDetails from './RecipeDetails';
+import React, { useState } from 'react';
+import { useRecipeStore } from './recipeStore';
 
-function App() {
+const AddRecipeForm = () => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const addRecipe = useRecipeStore((state) => state.addRecipe);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newRecipe = {
+      id: Date.now().toString(),
+      title,
+      description,
+    };
+    addRecipe(newRecipe);
+    setTitle('');
+    setDescription('');
+  };
+
   return (
-    <Router>
-      <div>
-        <h1>Recipe Sharing App</h1>
-        <nav>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/add">Add Recipe</a></li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/" element={<RecipeList />} />
-          <Route path="/add" element={<AddRecipeForm />} />
-          <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
-        </Routes>
-      </div>
-    </Router>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Title:
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Description:
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+      </label>
+      <button type="submit">Add Recipe</button>
+    </form>
   );
-}
+};
 
-export default App;
+export default AddRecipeForm
