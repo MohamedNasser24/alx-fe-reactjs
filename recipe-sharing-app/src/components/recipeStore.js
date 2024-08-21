@@ -1,30 +1,6 @@
 import create from 'zustand';
-const FavoritesList = () => {
-  const recipes = useRecipeStore(state => state.recipes);
-  const favoriteIds = useRecipeStore(state => state.favorites);
-
-  const favorites = recipes.filter(recipe => favoriteIds.includes(recipe.id));
-
-  return (
-    <div>
-      <h2>My Favorites</h2>
-      {favorites.length > 0 ? (
-        favorites.map(recipe => (
-          <div key={recipe.id}>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-          </div>
-        ))
-      ) : (
-        <p>No favorites yet.</p>
-      )}
-    </div>
-  );
-};
 const useRecipeStore = create(set => ({
   recipes: [],
-  searchTerm: '',
-  filteredRecipes: [],
   favorites: [],
   addFavorite: (recipeId) => set(state => ({
     favorites: [...state.favorites, recipeId]
@@ -34,54 +10,64 @@ const useRecipeStore = create(set => ({
   })),
   recommendations: [],
   generateRecommendations: () => set(state => {
-    // Basic recommendation logic: Recommend recipes not in favorites
     const recommended = state.recipes.filter(recipe =>
-      !state.favorites.includes(recipe.id) && Math.random() > 0.5
+      state.favorites.includes(recipe.id) && Math.random() > 0.5
     );
     return { recommendations: recommended };
   }),
-  setSearchTerm: (term) => {
-    set(state => ({
-      searchTerm: term,
-      filteredRecipes: state.recipes.filter(recipe =>
-        recipe.title.toLowerCase().includes(term.toLowerCase())
-      )
-    }));
-  },
 
-  setRecipes: (recipes) => set(state => ({
-    recipes,
-    filteredRecipes: recipes.filter(recipe =>
+
+  addRecipe: (newRecipe) => set(state => ({
+    recipes: [...state.recipes, newRecipe],
+    filteredRecipes: [...state.recipes, newRecipe].filter(recipe =>
       recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
     )
   })),
 
-  addRecipe: (newRecipe) => set(state => ({
-    recipes: [...state.recipes, newRecipe],
-    filteredRecipes: [...state.filteredRecipes, newRecipe]
+  updateRecipe: (updatedRecipe) => set(state => ({
+    recipes: state.recipes.map(recipe =>
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+    ),
+    filteredRecipes: state.filteredRecipes.map(recipe =>
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+    )
   })),
 
-  deleteRecipe: (recipeId) => set(state => {
-    const updatedRecipes = state.recipes.filter(recipe => recipe.id !== recipeId);
+  deleteRecipe: (recipeId) => set(state => ({
+    recipes: state.recipes.filter(recipe => recipe.id !== recipeId),
+    filteredRecipes: state.filteredRecipes.filter(recipe => recipe.id !== recipeId)
+  })),
+
+  addFavorite: (recipeId) => set(state => ({
+    favorites: [...state.favorites, recipeId]
+  })),
+
+  removeFavorite: (recipeId) => set(state => ({
+    favorites: state.favorites.filter(id => id !== recipeId)
+  })),
+
+  generateRecommendations: () => set(state => {
+    // Simple mock recommendation logic
+    const recommended = state.recipes.filter(recipe =>
+      state.favorites.includes(recipe.id) && Math.random() > 0.5
+    );
+    return { recommendations: recommended };
+  }),
+
+  setSearchTerm: (term) => set(state => {
+    const filtered = state.recipes.filter(recipe =>
+      recipe.title.toLowerCase().includes(term.toLowerCase())
+    );
     return {
-      recipes: updatedRecipes,
-      filteredRecipes: updatedRecipes.filter(recipe =>
-        recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-      )
+      searchTerm: term,
+      filteredRecipes: filtered
     };
   }),
 
-  updateRecipe: (updatedRecipe) => set(state => {
-    const updatedRecipes = state.recipes.map(recipe =>
-      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-    );
-    return {
-      recipes: updatedRecipes,
-      filteredRecipes: updatedRecipes.filter(recipe =>
-        recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-      )
-    };
-  }),
+  setRecipes: (recipes) => set({
+    recipes,
+    filteredRecipes: recipes
+  })
 }));
 
 export default useRecipeStore;
