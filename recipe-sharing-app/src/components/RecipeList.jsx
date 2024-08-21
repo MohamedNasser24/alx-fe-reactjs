@@ -1,20 +1,22 @@
 import React from 'react';
-import useRecipeStore from './recipeStore';
-import SearchBar from './SearchBar';
+import { useRecipeStore } from '../recipeStore'; // Adjust path as needed
 
-const RecipeList = () => {
-  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
+const RecipeList = ({ onSelectRecipe }) => {
+  const recipes = useRecipeStore(state => state.filteredRecipes);
 
   return (
     <div>
-      <SearchBar />
-      {filteredRecipes.length === 0 ? (
+      <h2>Recipe List</h2>
+      {recipes.length === 0 ? (
         <p>No recipes available</p>
       ) : (
-        filteredRecipes.map(recipe => (
+        recipes.map(recipe => (
           <div key={recipe.id}>
             <h3>{recipe.title}</h3>
             <p>{recipe.description}</p>
+            <button onClick={() => onSelectRecipe(recipe.id)}>
+              View Details
+            </button>
           </div>
         ))
       )}
@@ -23,5 +25,4 @@ const RecipeList = () => {
 };
 
 export default RecipeList;
-
 
