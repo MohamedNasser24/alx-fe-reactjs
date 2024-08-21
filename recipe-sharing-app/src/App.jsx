@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
+import AddRecipeForm from './components/AddRecipeForm';
 import RecipeDetails from './components/RecipeDetails';
-import { useRecipeStore } from './recipeStore'; // Adjust path as needed
 
-const App = () => {
-  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
-  const recipes = useRecipeStore(state => state.recipes);
-
+function App() {
   return (
-    <div>
-      {selectedRecipeId ? (
-        <RecipeDetails
-          recipeId={selectedRecipeId}
-          onClose={() => setSelectedRecipeId(null)}
-        />
-      ) : (
-        <RecipeList onSelectRecipe={setSelectedRecipeId} />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<RecipeList />} />
+        <Route path="/add" element={<AddRecipeForm />} />
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
