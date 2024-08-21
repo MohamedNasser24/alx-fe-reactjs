@@ -5,23 +5,38 @@ const useRecipeStore = create(set => ({
   favorites: [],
   searchTerm: '',
   filteredRecipes: [],
+  recommendations: [],
 
-  // Actions for recipe management
+  setSearchTerm: (term) => {
+    set(state => ({
+      searchTerm: term,
+      filteredRecipes: state.recipes.filter(recipe =>
+        recipe.title.toLowerCase().includes(term.toLowerCase())
+      )
+    }));
+  },
+
   addRecipe: (newRecipe) => set(state => ({
-    recipes: [...state.recipes, newRecipe]
+    recipes: [...state.recipes, newRecipe],
+    filteredRecipes: [...state.recipes, newRecipe].filter(recipe =>
+      recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
+    )
   })),
   
   deleteRecipe: (recipeId) => set(state => ({
-    recipes: state.recipes.filter(recipe => recipe.id !== recipeId)
+    recipes: state.recipes.filter(recipe => recipe.id !== recipeId),
+    filteredRecipes: state.filteredRecipes.filter(recipe => recipe.id !== recipeId)
   })),
   
   updateRecipe: (updatedRecipe) => set(state => ({
     recipes: state.recipes.map(recipe =>
       recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+    ),
+    filteredRecipes: state.filteredRecipes.map(recipe =>
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
     )
   })),
-  
-  // Actions for favorites management
+
   addFavorite: (recipeId) => set(state => ({
     favorites: [...state.favorites, recipeId]
   })),
@@ -30,28 +45,12 @@ const useRecipeStore = create(set => ({
     favorites: state.favorites.filter(id => id !== recipeId)
   })),
   
-  // Actions for recommendations
-  recommendations: [],
   generateRecommendations: () => set(state => {
-    // Mock implementation for recommendations
     const recommended = state.recipes.filter(recipe =>
       state.favorites.includes(recipe.id) && Math.random() > 0.5
     );
     return { recommendations: recommended };
-  }),
-
-  // Actions for search and filtering
-  setSearchTerm: (term) => {
-    set({ searchTerm: term });
-    // Trigger filtering whenever the search term changes
-    set(state => ({
-      filteredRecipes: state.recipes.filter(recipe =>
-        recipe.title.toLowerCase().includes(term.toLowerCase())
-      )
-    }));
-  },
-  
-  setRecipes: (recipes) => set({ recipes, filteredRecipes: recipes })
+  })
 }));
 
 export default useRecipeStore;
