@@ -1,38 +1,17 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import useRecipeStore from './recipeStore';
-import SearchBar from './SearchBar';
+import { useRecipeStore } from './recipeStore';
 
 const RecipeList = () => {
-  const { filteredRecipes, recipes, filterRecipes } = useRecipeStore(state => ({
-    filteredRecipes: state.filteredRecipes,
-    recipes: state.recipes,
-    filterRecipes: state.filterRecipes
-  }));
-
-  // Trigger filtering when recipes or search term changes
-  useEffect(() => {
-    filterRecipes();
-  }, [filterRecipes, recipes]);
+  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
+  const recipes = filteredRecipes.length > 0 ? filteredRecipes : useRecipeStore(state => state.recipes);
 
   return (
     <div>
-      <h2>Recipe List</h2>
-      <SearchBar />
-      <div>
-        {filteredRecipes.length > 0 ? (
-          filteredRecipes.map(recipe => (
-            <div key={recipe.id}>
-              <h3>
-                <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-              </h3>
-              <p>{recipe.description}</p>
-            </div>
-          ))
-        ) : (
-          <p>No recipes found</p>
-        )}
-      </div>
+      {recipes.map(recipe => (
+        <div key={recipe.id}>
+          <h3>{recipe.title}</h3>
+          <p>{recipe.description}</p>
+        </div>
+      ))}
     </div>
   );
 };
