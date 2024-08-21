@@ -1,7 +1,7 @@
 import React from 'react';
-import FavoritesList from './components/FavoritesList';
-import RecommendationsList from './components/RecommendationsList';
-import RecipeCard from './components/RecipeCard';
+import FavoritesList from './FavoritesList';
+import RecommendationsList from './RecommendationsList';
+import RecipeCard from './RecipeCard';
 import useRecipeStore from './store/recipeStore';
 
 const App = () => {
