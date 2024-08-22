@@ -1,7 +1,7 @@
 import create from 'zustand';
 
 const useRecipeStore = create(set => ({
-  recipes: [],
+  recipes: [],          // List of all recipes
   searchTerm: '',       // Search term for filtering
   filteredRecipes: [], // List of recipes filtered by the search term
 
