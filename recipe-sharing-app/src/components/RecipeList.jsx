@@ -1,7 +1,7 @@
 import React from 'react';
 import useRecipeStore from '../recipeStore';
-
-const RecipeList = () => {
+import { Link } from 'react-router-dom';
+function RecipeList() {
   const recipes = useRecipeStore(state => state.recipes);
 
   return (
@@ -14,7 +14,7 @@ const RecipeList = () => {
       ))}
     </div>
   );
-};
+}
 
 export default RecipeList;
 
