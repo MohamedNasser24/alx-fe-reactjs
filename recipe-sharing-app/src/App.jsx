@@ -6,7 +6,8 @@ import RecipeCard from './components/RecipeCard';
 import useRecipeStore from './store/recipeStore';
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
-const App = () => {
+import RecipeDetails from './RecipeDetails'; // Replace with the path to your RecipeDetails component
+function App() {
   return (
     <div>
       <h1>Recipe Sharing App</h1>
@@ -35,6 +36,6 @@ const App = () => {
       </div>
     </div>
   );
-};
+}
 
 export default App;
