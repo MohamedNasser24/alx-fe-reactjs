@@ -1,3 +1,5 @@
+// src/App.jsx
+
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
@@ -7,16 +9,32 @@ import RecipeDetails from './components/RecipeDetails';
 function App() {
   return (
     <div>
-      <h1>Recipe Sharing App</h1>
+      {/* Main header for the application */}
+      <header>
+        <h1>Recipe Sharing App</h1>
+      </header>
+
+      {/* Navigation menu */}
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/add">Add Recipe</Link>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/add">Add Recipe</Link></li>
+        </ul>
       </nav>
-      <Routes>
-        <Route path="/" element={<RecipeList />} />
-        <Route path="/add" element={<AddRecipeForm />} />
-        <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
-      </Routes>
+
+      {/* Route definitions */}
+      <main>
+        <Routes>
+          {/* Route for the home page displaying the list of recipes */}
+          <Route path="/" element={<RecipeList />} />
+          
+          {/* Route for the add recipe form */}
+          <Route path="/add" element={<AddRecipeForm />} />
+          
+          {/* Route for viewing details of a specific recipe */}
+          <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
+        </Routes>
+      </main>
     </div>
   );
 }
