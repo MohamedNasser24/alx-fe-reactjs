@@ -1,41 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import FavoritesList from './components/FavoritesList';
-import RecommendationsList from './components/RecommendationsList';
-import RecipeCard from './components/RecipeCard';
-import useRecipeStore from './store/recipeStore';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
-import RecipeDetails from './RecipeDetails'; // Replace with the path to your RecipeDetails component
-function App() {
+import RecipeDetails from './components/RecipeDetails';
+
+const App = () => {
   return (
-    <div>
-      <h1>Recipe Sharing App</h1>
-      <AddRecipeForm />
-      <RecipeList />
-    </div>
-  );
-
-  const exampleRecipes = [
-    { id: 1, title: 'Spaghetti Carbonara', description: 'A classic Italian pasta dish.' },
-    { id: 2, title: 'Chicken Curry', description: 'A spicy and flavorful curry.' },
-    // Add more recipes as needed
-  ];
-
-  useRecipeStore.setState({ recipes: exampleRecipes });
-
-  return (
-    <div>
-      <h1>Recipe Sharing Application</h1>
-      <FavoritesList />
-      <RecommendationsList />
+    <Router>
       <div>
-        {exampleRecipes.map(recipe => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
-        ))}
+        <h1>Recipe Sharing App</h1>
+        <AddRecipeForm />
+        <Routes>
+          <Route path="/" element={<RecipeList />} />
+          <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
-}
+};
 
 export default App;
