@@ -31,4 +31,4 @@ const AddRecipeForm = () => {
   );
 };
 
-export default AddRecipeForm
+export default AddRecipeForm;
