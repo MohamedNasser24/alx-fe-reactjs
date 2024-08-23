@@ -1,7 +1,7 @@
 import React from 'react';
 import RecipeCard from './RecipeCard';
 import useRecipeStore from '../recipeStore';
-
+import { Link } from 'react-router-dom';
 const RecipeList = () => {
   const recipes = useRecipeStore(state => state.recipes);
 
