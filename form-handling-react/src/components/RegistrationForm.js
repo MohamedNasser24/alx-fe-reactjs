@@ -1,86 +1,73 @@
 import React, { useState } from 'react';
 
 const RegistrationForm = () => {
-  const [formValues, setFormValues] = useState({
+  const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
   });
 
-  const [errors, setErrors] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
+    setFormData({
+      ...formData,
       [name]: value,
     });
   };
 
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.username) newErrors.username = 'Username is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.password) newErrors.password = 'Password is required';
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newErrors = {
-      username: '',
-      email: '',
-      password: '',
-    };
-
-    // Basic validation
-    if (!formValues.username) newErrors.username = 'Username is required';
-    if (!formValues.email) newErrors.email = 'Email is required';
-    if (!formValues.password) newErrors.password = 'Password is required';
-
-    setErrors(newErrors);
-
-    // If there are no errors, handle form submission (mock API call)
-    if (!newErrors.username && !newErrors.email && !newErrors.password) {
-      console.log('Form submitted:', formValues);
-      // Mock API call
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length === 0) {
+      // Simulate API call
+      console.log('Submitting:', formData);
+    } else {
+      setErrors(validationErrors);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="username">Username</label>
+        <label>Username:</label>
         <input
           type="text"
-          id="username"
           name="username"
-          value={formValues.username}
+          value={formData.username}
           onChange={handleChange}
         />
-        {errors.username && <div>{errors.username}</div>}
+        {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
       </div>
-
       <div>
-        <label htmlFor="email">Email</label>
+        <label>Email:</label>
         <input
           type="email"
-          id="email"
           name="email"
-          value={formValues.email}
+          value={formData.email}
           onChange={handleChange}
         />
-        {errors.email && <div>{errors.email}</div>}
+        {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
       </div>
-
       <div>
-        <label htmlFor="password">Password</label>
+        <label>Password:</label>
         <input
           type="password"
-          id="password"
           name="password"
-          value={formValues.password}
+          value={formData.password}
           onChange={handleChange}
         />
-        {errors.password && <div>{errors.password}</div>}
+        {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
       </div>
-
       <button type="submit">Register</button>
     </form>
   );
