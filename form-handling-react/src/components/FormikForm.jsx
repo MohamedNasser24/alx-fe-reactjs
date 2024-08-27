@@ -8,38 +8,36 @@ const validationSchema = Yup.object({
   password: Yup.string().required('Password is required'),
 });
 
-const FormikForm = () => {
-  return (
-    <Formik
-      initialValues={{ username: '', email: '', password: '' }}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {
-        // Simulate API call
-        console.log('Submitting:', values);
-      }}
-    >
-      {() => (
-        <Form>
-          <div>
-            <label>Username:</label>
-            <Field type="text" name="username" />
-            <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
-          </div>
-          <div>
-            <label>Email:</label>
-            <Field type="email" name="email" />
-            <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
-          </div>
-          <div>
-            <label>Password:</label>
-            <Field type="password" name="password" />
-            <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
-          </div>
-          <button type="submit">Register</button>
-        </Form>
-      )}
-    </Formik>
-  );
-};
+const FormikForm = () => (
+  <Formik
+    initialValues={{ username: '', email: '', password: '' }}
+    validationSchema={validationSchema}
+    onSubmit={(values) => {
+      // Simulate API call
+      console.log('Submitting:', values);
+    }}
+  >
+    {() => (
+      <Form>
+        <div>
+          <label>Username:</label>
+          <Field type="text" name="username" />
+          <ErrorMessage name="username" component="div" style={{ color: 'red' }} />
+        </div>
+        <div>
+          <label>Email:</label>
+          <Field type="email" name="email" />
+          <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
+        </div>
+        <div>
+          <label>Password:</label>
+          <Field type="password" name="password" />
+          <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
+        </div>
+        <button type="submit">Register</button>
+      </Form>
+    )}
+  </Formik>
+);
 
 export default FormikForm;
