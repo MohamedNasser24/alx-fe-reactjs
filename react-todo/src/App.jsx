@@ -1,4 +1,4 @@
-import React from 'react'; // Import React once
+import React from 'react';
 import TodoList from './components/TodoList';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 

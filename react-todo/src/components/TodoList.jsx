@@ -1,15 +1,4 @@
 import React, { useState } from 'react';
-import AddTodoForm from './AddTodoForm';
-test('renders TodoList component', () => {
-  render(<TodoList />);
-  expect(screen.getByText(/Todo List/i)).toBeInTheDocument();
-});
-test('renders initial todos', () => {
-  render(<TodoList />);
-  expect(screen.getByText(/Learn React/i)).toBeInTheDocument();
-  expect(screen.getByText(/Build a Todo app/i)).toBeInTheDocument();
-  expect(screen.getByText(/Write tests/i)).toBeInTheDocument();
-});
 
 const initialTodos = [
   { id: 1, text: 'Learn React', completed: false },
@@ -19,12 +8,13 @@ const initialTodos = [
 
 function TodoList() {
   const [todos, setTodos] = useState(initialTodos);
+  const [newTodo, setNewTodo] = useState('');
 
-  const addTodo = (text) => {
-    setTodos([
-      ...todos,
-      { id: Date.now(), text, completed: false }
-    ]);
+  const addTodo = () => {
+    if (newTodo.trim() !== '') {
+      setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
+      setNewTodo('');
+    }
   };
 
   const toggleTodo = (id) => {
@@ -40,17 +30,22 @@ function TodoList() {
   return (
     <div>
       <h1>Todo List</h1>
-      <AddTodoForm addTodo={addTodo} />
+      <input
+        type="text"
+        placeholder="Enter a new todo"
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
+      />
+      <button onClick={addTodo}>Add Todo</button>
       <ul>
         {todos.map(todo => (
-          <li key={todo.id}>
-            <span
-              onClick={() => toggleTodo(todo.id)}
-              style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
-            >
-              {todo.text}
-            </span>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+          <li
+            key={todo.id}
+            onClick={() => toggleTodo(todo.id)}
+            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+          >
+            {todo.text}
+            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>Delete</button>
           </li>
         ))}
       </ul>
