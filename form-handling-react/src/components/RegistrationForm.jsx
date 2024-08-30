@@ -1,37 +1,63 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import TodoList from './Components/TodoList'; // Adjust the path if needed
-import { render, screen } from '@testing-library/react';
+import React, { useState } from 'react';
 
+const RegistrationForm = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
 
-test('renders the TodoList component correctly', () => {
-  render(<TodoList />);
-  expect(screen.getByText('Todo List')).toBeInTheDocument();
-  expect(screen.getByText('Learn React')).toBeInTheDocument();
-  expect(screen.getByText('Build a Todo List')).toBeInTheDocument();
-});
+  const validate = () => {
+    const newErrors = {};
+    if (!username) newErrors.username = 'Username is required';
+    if (!email) newErrors.email = 'Email is required';
+    if (!password) newErrors.password = 'Password is required';
+    return newErrors;
+  };
 
-test('adds a new todo', () => {
-  render(<TodoList />);
-  fireEvent.change(screen.getByPlaceholderText(/add a new todo/i), {
-    target: { value: 'New Todo' },
-  });
-  fireEvent.click(screen.getByText('Add'));
-  expect(screen.getByText('New Todo')).toBeInTheDocument();
-});
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    const formData = { username, email, password };
+    console.log('Form Submitted:', formData);
+  };
 
-test('toggles a todo item', () => {
-  render(<TodoList />);
-  const todoItem = screen.getByText('Learn React');
-  fireEvent.click(todoItem);
-  expect(todoItem).toHaveStyle('text-decoration: line-through');
-  fireEvent.click(todoItem);
-  expect(todoItem).toHaveStyle('text-decoration: none');
-});
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      {errors.username && <p>{errors.username}</p>}
 
-test('deletes a todo item', () => {
-  render(<TodoList />);
-  fireEvent.click(screen.getByText('Delete', { selector: 'button' }));
-  expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
-});
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      {errors.email && <p>{errors.email}</p>}
+
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      {errors.password && <p>{errors.password}</p>}
+
+      <button type="submit">Register</button>
+    </form>
+  );
+};
+
+export default RegistrationForm
