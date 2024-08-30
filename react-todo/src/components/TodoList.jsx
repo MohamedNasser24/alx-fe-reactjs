@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
 import AddTodoForm from './AddTodoForm';
+test('renders TodoList component', () => {
+  render(<TodoList />);
+  expect(screen.getByText(/Todo List/i)).toBeInTheDocument();
+});
+test('renders initial todos', () => {
+  render(<TodoList />);
+  expect(screen.getByText(/Learn React/i)).toBeInTheDocument();
+  expect(screen.getByText(/Build a Todo app/i)).toBeInTheDocument();
+  expect(screen.getByText(/Write tests/i)).toBeInTheDocument();
+});
 
 const initialTodos = [
   { id: 1, text: 'Learn React', completed: false },
