@@ -1,14 +1,15 @@
-import React from 'react';
+import React from 'react'; // Import React once
 import TodoList from './components/TodoList';
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <TodoList />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<TodoList />} />
+        {/* Add other routes here */}
+      </Routes>
+    </Router>
   );
 }
 
