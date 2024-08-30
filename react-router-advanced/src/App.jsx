@@ -10,7 +10,7 @@ import NotFound from './components/NotFound';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import Blog from './components/Blog';
-
+import Home from "./components/Home";
 function App() {
   const [count, setCount] = useState(0)
 
