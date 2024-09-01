@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",  // Paths to your files where Tailwind CSS classes are used
-    "./public/index.html"          // Include HTML files if needed
+    "./src/**/*.{js,jsx,ts,tsx}",  // Paths to all files using Tailwind classes
+    "./public/index.html"          // Include HTML files if used
   ],
-  darkMode: 'class', // or 'media' for system preference-based dark mode
+  darkMode: 'class', // or 'media' to enable dark mode based on user system preferences
   theme: {
     extend: {
-      // Extend the default theme here
+      // Add custom theme settings here
       colors: {
         customColor: '#ff5722',
       },
@@ -18,6 +18,7 @@ module.exports = {
     },
   },
   plugins: [
-    // Add any Tailwind CSS plugins here
+    // Add Tailwind CSS plugins here if needed
   ],
 };
+
