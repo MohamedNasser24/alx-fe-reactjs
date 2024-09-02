@@ -1,23 +1,25 @@
-// src/components/UserProfile.jsx
-function UserProfile() {
+import React from 'react';
+
+const UserProfile = () => {
   return (
-    <div className="bg-gray-100 p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md mx-auto my-10 rounded-lg shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl">
-      <img 
-        src="https://via.placeholder.com/150" 
-        alt="User" 
-        className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full mx-auto transition-transform duration-300 ease-in-out hover:scale-110"
-      />
-      <h1 className="text-lg sm:text-xl md:text-2xl text-blue-800 my-4 transition-colors duration-300 ease-in-out hover:text-blue-500">
-        John Doe
-      </h1>
-      <p className="text-sm sm:text-base md:text-lg text-gray-600">
-        Developer at Example Co. Loves to write code and explore new technologies.
-      </p>
+    <div className="container mx-auto p-4 sm:p-4 md:p-8 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+      <div className="flex flex-col items-center">
+        <img
+          src="/path/to/profile-image.jpg"
+          alt="Profile"
+          className="w-24 h-24 sm:w-24 sm:h-24 md:w-36 md:h-36 rounded-full object-cover"
+        />
+        <h1 className="text-lg sm:text-lg md:text-xl font-bold mt-4">John Doe</h1>
+        <p className="text-sm sm:text-sm md:text-base mt-2 text-center">
+          A short description about John Doe goes here. It provides a brief overview of the user.
+        </p>
+      </div>
     </div>
   );
-}
+};
 
 export default UserProfile;
+
 
 
 
