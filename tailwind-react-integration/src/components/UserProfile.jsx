@@ -2,7 +2,7 @@ import React from 'react';
 
 const UserProfile = () => {
   return (
-    <div className="container mx-auto p-4 sm:p-6 md:p-8 lg:p-10 max-w-xs sm:max-w-sm md:max-w-sm lg:max-w-lg transition-transform duration-300 ease-in-out hover:shadow-xl">
+    <div className="container mx-auto p-4 sm:p-6 md:p-8 lg:p-10 max-w-xs sm:max-w-sm md:max-w-sm lg:max-w-lg transition-transform duration-300 ease-in-out hover:shadow-xl hover:scale-105">
       <div className="flex flex-col items-center">
         <img
           src="/path/to/profile-image.jpg"
@@ -21,6 +21,7 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
 
 
 
