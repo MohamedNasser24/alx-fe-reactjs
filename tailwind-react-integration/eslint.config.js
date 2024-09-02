@@ -3,7 +3,15 @@ import globals from 'globals'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-
+module.exports = {
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}', // Ensure all your component files are included
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
 export default [
   { ignores: ['dist'] },
   {
