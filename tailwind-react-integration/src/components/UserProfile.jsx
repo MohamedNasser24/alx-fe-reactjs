@@ -9,7 +9,7 @@ const UserProfile = () => {
           alt="Profile"
           className="w-24 h-24 sm:w-24 sm:h-24 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full object-cover transition-transform duration-300 ease-in-out hover:scale-110"
         />
-        <h1 className="text-lg sm:text-lg md:text-xl lg:text-2xl text-blue-800 my-4 font-bold">
+        <h1 className="text-lg sm:text-lg md:text-xl lg:text-2xl text-blue-800 my-4 font-bold transition-colors duration-300 ease-in-out hover:text-blue-500">
           John Doe
         </h1>
         <p className="text-sm sm:text-sm md:text-base lg:text-lg text-gray-600 mt-2 text-center">
