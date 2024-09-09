@@ -5,6 +5,7 @@ const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
@@ -15,6 +16,7 @@ const AddRecipeForm = () => {
     if (!title) validationErrors.title = 'Title is required';
     if (!ingredients) validationErrors.ingredients = 'Ingredients are required';
     if (!instructions) validationErrors.instructions = 'Instructions are required';
+    if (!steps) validationErrors.steps = 'Steps are required';
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -25,7 +27,7 @@ const AddRecipeForm = () => {
     setErrors({});
 
     // Handle form submission logic here (e.g., send data to a server)
-    console.log({ title, ingredients, instructions });
+    console.log({ title, ingredients, instructions, steps });
   };
 
   return (
@@ -74,6 +76,20 @@ const AddRecipeForm = () => {
           {errors.instructions && <p className="mt-1 text-sm text-red-600">{errors.instructions}</p>}
         </div>
 
+        <div>
+          <label htmlFor="steps" className="block text-sm font-medium text-gray-700">Steps</label>
+          <textarea
+            id="steps"
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
+            rows="4"
+            className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm ${
+              errors.steps ? 'border-red-500' : ''
+            }`}
+          />
+          {errors.steps && <p className="mt-1 text-sm text-red-600">{errors.steps}</p>}
+        </div>
+
         <button
           type="submit"
           className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -86,3 +102,4 @@ const AddRecipeForm = () => {
 };
 
 export default AddRecipeForm;
+
