@@ -5,14 +5,12 @@
   "dependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.4.0",  // or the latest version
-    // other dependencies
+    "react-router-dom": "^6.4.0"  // Use the latest version if possible
   },
   "devDependencies": {
     "tailwindcss": "^3.0.0",
     "postcss": "^8.0.0",
-    "autoprefixer": "^10.0.0",
-    // other devDependencies
+    "autoprefixer": "^10.0.0"
   },
   "scripts": {
     "dev": "vite",
