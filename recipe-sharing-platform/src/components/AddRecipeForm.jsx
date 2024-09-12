@@ -1,29 +1,36 @@
 import React, { useState } from 'react';
 
 const AddRecipeForm = () => {
+  // State for form inputs and validation
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState('');
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!title || !ingredients || !steps) {
+    // Basic validation
+    if (!title.trim() || !ingredients.trim() || !steps.trim()) {
       setErrors('All fields are required.');
       return;
     }
 
+    // Optional: Split ingredients into an array
     const ingredientsArray = ingredients.split('\n').filter(item => item.trim() !== '');
 
+    // Optional: Ensure at least two ingredients
     if (ingredientsArray.length < 2) {
       setErrors('Please provide at least two ingredients.');
       return;
     }
 
+    // Clear errors and handle the form submission (e.g., send to an API)
     setErrors('');
     console.log({ title, ingredients: ingredientsArray, steps });
 
+    // Reset form fields
     setTitle('');
     setIngredients('');
     setSteps('');
