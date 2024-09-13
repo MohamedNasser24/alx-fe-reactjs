@@ -6,7 +6,7 @@ const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    // Simulate fetching data
+    // Simulate data fetching
     setRecipes(data);
   }, []);
 
@@ -16,7 +16,7 @@ const HomePage = () => {
         <h1 className="text-4xl font-bold">Recipe Sharing Platform</h1>
         <p className="text-lg mt-2">Discover and share your favorite recipes.</p>
       </header>
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {recipes.map(recipe => (
           <div key={recipe.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
@@ -33,4 +33,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
 
