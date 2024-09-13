@@ -1,4 +1,4 @@
-// src/App.js
+// src/App.jsx (or App.js)
 import React from 'react';
 import HomePage from './components/HomePage';
 
