@@ -7,24 +7,31 @@ const AddRecipeForm = () => {
   const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState({});
 
+  // Validation function
+  const validate = () => {
+    const newErrors = {};
+    if (!title.trim()) newErrors.title = 'Title is required';
+    if (!ingredients.trim()) newErrors.ingredients = 'Ingredients are required';
+    if (!steps.trim()) newErrors.steps = 'Preparation steps are required';
+    return newErrors;
+  };
+
+  // Handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newErrors = {};
+    const validationErrors = validate();
     
-    // Validation
-    if (!title) newErrors.title = 'Title is required';
-    if (!ingredients) newErrors.ingredients = 'Ingredients are required';
-    if (!steps) newErrors.steps = 'Preparation steps are required';
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
-
-    // If valid, clear errors and process form data
+    
+    // Clear errors
     setErrors({});
-    // Handle form submission (e.g., send data to an API or update state)
+    
+    // Handle form submission logic here
     console.log({ title, ingredients, steps });
+    // Example: Send data to an API or update application state
   };
 
   return (
