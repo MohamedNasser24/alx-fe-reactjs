@@ -7,9 +7,8 @@ const RecipeDetail = () => {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    // Fetch the recipe details based on the id
-    // In a real app, you would fetch from an API or similar
-    const fetchedRecipe = data.recipes.find(recipe => recipe.id === parseInt(id));
+    // Simulate fetching recipe details
+    const fetchedRecipe = data.recipes.find(recipe => recipe.id === parseInt(id, 10));
     setRecipe(fetchedRecipe);
   }, [id]);
 
@@ -20,10 +19,12 @@ const RecipeDetail = () => {
       <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold mb-4">{recipe.title}</h1>
         <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover rounded-md mb-4" />
-        <div className="mb-4">
-          <h2 className="text-2xl font-semibold mb-2">Description</h2>
-          <p className="text-gray-700">{recipe.description}</p>
-        </div>
+        {recipe.description && (
+          <div className="mb-4">
+            <h2 className="text-2xl font-semibold mb-2">Description</h2>
+            <p className="text-gray-700">{recipe.description}</p>
+          </div>
+        )}
         <div className="mb-4">
           <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
           <ul className="list-disc pl-5">
