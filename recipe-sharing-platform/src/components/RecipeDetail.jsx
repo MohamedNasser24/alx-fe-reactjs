@@ -7,7 +7,7 @@ const RecipeDetail = () => {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    // Simulate fetching recipe details
+    // Fetch recipe data based on the ID from the URL
     const fetchedRecipe = data.recipes.find(recipe => recipe.id === parseInt(id, 10));
     setRecipe(fetchedRecipe);
   }, [id]);
