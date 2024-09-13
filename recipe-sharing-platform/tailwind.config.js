@@ -1,22 +1,8 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html",
-  ],
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: false,
   theme: {
-    extend: {
-      colors: {
-        primary: '#1D4ED8',
-        secondary: '#D97706',
-      },
-      spacing: {
-        '144': '36rem',
-      },
-    },
+    extend: {},
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-  ],
-}
+  plugins: [],
+};
