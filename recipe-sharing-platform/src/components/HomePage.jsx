@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import data from '../data.json'; // Ensure data.json is in the right place
+import data from '../data.json'; // Ensure data.json path is correct
 
 const HomePage = () => {
   return (
