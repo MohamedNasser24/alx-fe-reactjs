@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import data from '../data.json'; // Adjust path as needed
+import data from '../data.json'; // Adjust the path if necessary
 
 const RecipeDetail = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    // Simulate fetching recipe details based on the ID
+    // Find the recipe by ID
     const fetchedRecipe = data.recipes.find(recipe => recipe.id === parseInt(id, 10));
     setRecipe(fetchedRecipe);
   }, [id]);
@@ -39,4 +39,3 @@ const RecipeDetail = () => {
 };
 
 export default RecipeDetail;
-
