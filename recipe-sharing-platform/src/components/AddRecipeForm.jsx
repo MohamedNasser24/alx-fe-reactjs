@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 const AddRecipeForm = () => {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (event) => {
@@ -14,7 +14,7 @@ const AddRecipeForm = () => {
     // Validation
     if (!title) newErrors.title = 'Title is required';
     if (!ingredients) newErrors.ingredients = 'Ingredients are required';
-    if (!instructions) newErrors.instructions = 'Instructions are required';
+    if (!steps) newErrors.steps = 'Preparation steps are required';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -24,7 +24,7 @@ const AddRecipeForm = () => {
     // If valid, clear errors and process form data
     setErrors({});
     // Handle form submission (e.g., send data to an API or update state)
-    console.log({ title, ingredients, instructions });
+    console.log({ title, ingredients, steps });
   };
 
   return (
@@ -56,15 +56,15 @@ const AddRecipeForm = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="instructions" className="block text-sm font-medium text-gray-700">Instructions</label>
+          <label htmlFor="steps" className="block text-sm font-medium text-gray-700">Preparation Steps</label>
           <textarea
-            id="instructions"
+            id="steps"
             rows="6"
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
-          {errors.instructions && <p className="text-red-500 text-sm">{errors.instructions}</p>}
+          {errors.steps && <p className="text-red-500 text-sm">{errors.steps}</p>}
         </div>
 
         <button
