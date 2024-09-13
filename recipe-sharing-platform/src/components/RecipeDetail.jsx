@@ -8,7 +8,7 @@ const RecipeDetail = () => {
 
   useEffect(() => {
     // Fetch recipe details based on ID
-    fetch('/data.json')
+    fetch('/src/data.json')
       .then((response) => response.json())
       .then((data) => {
         const recipeDetail = data.find((recipe) => recipe.id === parseInt(id));
