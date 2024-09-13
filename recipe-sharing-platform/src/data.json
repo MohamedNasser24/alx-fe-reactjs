@@ -1,47 +1,20 @@
-[
-  {
-    "id": 1,
-    "title": "Spaghetti Carbonara",
-    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "https://via.placeholder.com/150",
-    "ingredients": [
-      "200g spaghetti",
-      "100g pancetta",
-      "2 large eggs",
-      "50g pecorino cheese",
-      "50g parmesan",
-      "Freshly ground black pepper"
-    ],
-    "instructions": [
-      "Cook spaghetti according to package instructions.",
-      "Fry pancetta until crispy.",
-      "Mix eggs with grated cheese and black pepper.",
-      "Combine pasta with pancetta and remove from heat.",
-      "Stir in egg mixture and serve immediately."
-    ]
-  },
-  {
-    "id": 2,
-    "title": "Chicken Tikka Masala",
-    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "https://via.placeholder.com/150",
-    "ingredients": [
-      "500g chicken breast",
-      "200g yogurt",
-      "2 tablespoons tikka masala paste",
-      "1 onion, chopped",
-      "400g canned tomatoes",
-      "150ml cream",
-      "Fresh cilantro"
-    ],
-    "instructions": [
-      "Marinate chicken in yogurt and tikka masala paste.",
-      "Grill or pan-fry chicken until cooked through.",
-      "Cook onions until soft, then add tomatoes and simmer.",
-      "Stir in cream and cooked chicken.",
-      "Garnish with fresh cilantro and serve with rice."
-    ]
-  }
-]
+{
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Spaghetti Carbonara",
+      "image": "/images/carbonara.jpg",
+      "ingredients": [
+        "200g spaghetti",
+        "100g pancetta",
+        "2 large eggs",
+        "50g Parmesan cheese",
+        "2 cloves garlic",
+        "Salt and pepper"
+      ],
+      "description": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper."
+    }
+  ]
+}
 
   
