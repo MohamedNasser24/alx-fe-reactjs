@@ -1,31 +1,15 @@
-// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
 const Search = () => {
     const [username, setUsername] = useState('');
-    const [location, setLocation] = useState('');
-    const [minRepos, setMinRepos] = useState('');
-    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Handle input changes
+    // Handle input change
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        switch (name) {
-            case 'username':
-                setUsername(value);
-                break;
-            case 'location':
-                setLocation(value);
-                break;
-            case 'minRepos':
-                setMinRepos(value);
-                break;
-            default:
-                break;
-        }
+        setUsername(event.target.value);
     };
 
     // Handle form submission
@@ -33,13 +17,13 @@ const Search = () => {
         event.preventDefault();
         setLoading(true);
         setError(null);
+        setUser(null);
 
         try {
-            const userData = await fetchUserData(username, location, minRepos);
-            setUsers(userData.items || []);
+            const data = await fetchUserData(username);
+            setUser(data);
         } catch (err) {
-            setError('Looks like we can\'t find any users');
-            setUsers([]);
+            setError('Looks like we can\'t find the user');
         } finally {
             setLoading(false);
         }
@@ -51,26 +35,9 @@ const Search = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                     type="text"
-                    name="username"
-                    placeholder="GitHub username"
                     value={username}
                     onChange={handleInputChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                    type="text"
-                    name="location"
-                    placeholder="Location (optional)"
-                    value={location}
-                    onChange={handleInputChange}
-                    className="w-full p-2 border border-gray-300 rounded"
-                />
-                <input
-                    type="number"
-                    name="minRepos"
-                    placeholder="Minimum Repositories (optional)"
-                    value={minRepos}
-                    onChange={handleInputChange}
+                    placeholder="Enter GitHub username"
                     className="w-full p-2 border border-gray-300 rounded"
                 />
                 <button
@@ -82,20 +49,14 @@ const Search = () => {
             </form>
             {loading && <p className="text-gray-500">Loading...</p>}
             {error && <p className="text-red-500">{error}</p>}
-            {users.length > 0 && (
-                <ul className="space-y-4">
-                    {users.map((user) => (
-                        <li key={user.id} className="flex items-center space-x-4">
-                            <img src={user.avatar_url} alt={user.login} className="w-12 h-12 rounded-full" />
-                            <div>
-                                <h3 className="text-lg font-semibold">{user.login}</h3>
-                                <p className="text-sm text-gray-600">Location: {user.location || 'N/A'}</p>
-                                <p className="text-sm text-gray-600">Public Repos: {user.public_repos}</p>
-                                <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">View Profile</a>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+            {user && (
+                <div className="flex items-center space-x-4">
+                    <img src={user.avatar_url} alt={user.login} className="w-12 h-12 rounded-full" />
+                    <div>
+                        <h3 className="text-lg font-semibold">{user.login}</h3>
+                        <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">View Profile</a>
+                    </div>
+                </div>
             )}
         </div>
     );
