@@ -10,20 +10,20 @@ const Search = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setError('');
-    setUser(null);
+    setError(''); // Clear previous error
+    setUser(null); // Clear previous user data
 
     try {
       const userData = await fetchUserData(username);
       setUser(userData);
     } catch (err) {
       if (err.message === 'User not found') {
-        setError('Looks like we can\'t find the user');
+        setError("Looks like we can't find the user"); // Set specific error message
       } else {
-        setError('An error occurred while fetching user data');
+        setError('An error occurred while fetching user data'); // Handle other errors
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Always clear loading state
     }
   };
 
