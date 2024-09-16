@@ -1,69 +1,66 @@
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
+import { fetchUsers } from '../services/githubService';
 
 const Search = () => {
-    const [username, setUsername] = useState('');
+    const [query, setQuery] = useState('');
+    const [location, setLocation] = useState('');
+    const [minRepos, setMinRepos] = useState(0);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
         setError('');
         try {
-            const data = await fetchUserData(username);
-            if (data && data.length > 0) {
-                setUsers(data);
-            } else {
-                setError('Looks like we can’t find the user');
-                setUsers([]);
-            }
+            const data = await fetchUsers(query, location, minRepos);
+            setUsers(data);
         } catch (err) {
-            setError('Looks like we can’t find the user');
+            setError('Error fetching users');
             setUsers([]);
         } finally {
             setLoading(false);
         }
     };
 
-    // Handle input change
-    const handleChange = (event) => {
-        setUsername(event.target.value);
-    };
-
     return (
-        <div className="search-container">
-            <h1>GitHub User Search</h1>
-            <form onSubmit={handleSubmit} className="search-form">
+        <div>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    value={username}
-                    onChange={handleChange}
-                    placeholder="Enter GitHub username"
-                    className="input-field"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search term"
                 />
-                <button type="submit" disabled={loading} className="submit-button">
+                <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Location (optional)"
+                />
+                <input
+                    type="number"
+                    value={minRepos}
+                    onChange={(e) => setMinRepos(Number(e.target.value))}
+                    placeholder="Min repositories (optional)"
+                />
+                <button type="submit" disabled={loading}>
                     {loading ? 'Loading...' : 'Search'}
                 </button>
             </form>
 
-            {error && <p className="error-message">{error}</p>}
-
-            {users.length > 0 && (
-                <div className="user-list">
-                    {users.map(user => (
-                        <div key={user.id} className="user-info">
-                            <img src={user.avatar_url} alt={user.login} className="avatar" />
-                            <h2>{user.name || user.login}</h2>
-                            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-                                {user.login}
-                            </a>
-                        </div>
-                    ))}
-                </div>
-            )}
+            {error && <p>{error}</p>}
+            <ul>
+                {users.map(user => (
+                    <li key={user.id}>
+                        <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                            <img src={user.avatar_url} alt={user.login} width="50" />
+                            {user.login}
+                        </a>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

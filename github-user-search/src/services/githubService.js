@@ -1,33 +1,41 @@
+// src/services/githubService.js
+
 import axios from 'axios';
 
-// Base URL for GitHub API
+// Base URL for GitHub Search API
 const BASE_URL = 'https://api.github.com/search/users';
 
-// Function to fetch user data with advanced search parameters
-export const fetchUsers = async (username, location = '', minRepos = 0) => {
+/**
+ * Fetch users from GitHub based on search criteria.
+ * @param {string} query - The search term (e.g., username).
+ * @param {string} location - Optional location filter.
+ * @param {number} minRepos - Optional minimum repositories filter.
+ * @returns {Promise<Object[]>} - A promise that resolves to the list of users.
+ */
+export const fetchUsers = async (query, location = '', minRepos = 0) => {
     try {
-        // Construct the query string
-        let query = `user:${username}`;
+        // Construct the query string with additional parameters if provided
+        let searchQuery = query;
         if (location) {
-            query += ` location:${location}`;
+            searchQuery += ` location:${location}`;
         }
         if (minRepos > 0) {
-            query += ` repos:>=${minRepos}`;
+            searchQuery += ` repos:>=${minRepos}`;
         }
 
-        // Make the API call
+        // Make the API request
         const response = await axios.get(BASE_URL, {
             params: {
-                q: query,
+                q: searchQuery,  // The query parameter for the search
                 sort: 'followers', // Optional: sort by followers
                 order: 'desc' // Optional: order in descending
             }
         });
 
-        // Return the results
-        return response.data.items; // The array of user objects
+        // Return the list of users
+        return response.data.items; // This is an array of user objects
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        throw error; // Propagate error for handling in the component
+        console.error('Error fetching users:', error);
+        throw error; // Propagate the error to be handled in the component
     }
 };
