@@ -9,7 +9,6 @@ const Search = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Handle input changes
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         switch (name) {
@@ -27,17 +26,14 @@ const Search = () => {
         }
     };
 
-    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
         setError(null);
         setUsers([]);
 
-        const query = `user:${username} location:${location} repos:>${minRepos}`;
-
         try {
-            const data = await fetchUserData(query);
+            const data = await fetchUserData(username, location, minRepos);
             setUsers(data.items || []);
         } catch (err) {
             setError('Looks like we can\'t find any users with these criteria');
@@ -91,6 +87,7 @@ const Search = () => {
                             <div>
                                 <h3 className="text-lg font-semibold">{user.login}</h3>
                                 <p className="text-gray-600">{user.location || 'Location not provided'}</p>
+                                <p className="text-gray-600">Repositories: {user.public_repos || 'N/A'}</p>
                                 <a
                                     href={user.html_url}
                                     target="_blank"
