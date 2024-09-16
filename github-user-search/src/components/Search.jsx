@@ -1,3 +1,4 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
@@ -9,13 +10,25 @@ const Search = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // Handle input changes
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        if (name === 'username') setUsername(value);
-        if (name === 'location') setLocation(value);
-        if (name === 'minRepos') setMinRepos(value);
+        switch (name) {
+            case 'username':
+                setUsername(value);
+                break;
+            case 'location':
+                setLocation(value);
+                break;
+            case 'minRepos':
+                setMinRepos(value);
+                break;
+            default:
+                break;
+        }
     };
 
+    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -89,6 +102,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
