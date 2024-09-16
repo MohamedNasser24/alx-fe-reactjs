@@ -7,7 +7,10 @@ export const fetchUserData = async (username) => {
         const response = await axios.get(`${BASE_URL}/${username}`);
         return response.data;
     } catch (error) {
-        // Throw an error to be caught in the component
-        throw new Error('User not found');
+        // If the error status is 404 or other errors, throw a new error
+        if (error.response && error.response.status === 404) {
+            throw new Error('User not found');
+        }
+        throw new Error('An error occurred');
     }
 };
