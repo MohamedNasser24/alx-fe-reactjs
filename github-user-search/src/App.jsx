@@ -1,12 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css'; // Import Tailwind CSS
+import Search from './components/Search';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const App = () => {
+  return (
+    <div>
+      <h1>GitHub User Search</h1>
+      <Search />
+    </div>
+  );
+};
+
+export default App;
 
 
