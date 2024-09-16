@@ -1,4 +1,4 @@
-// src/components/Search.js
+// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
@@ -6,12 +6,13 @@ const Search = () => {
   const [username, setUsername] = useState('');
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setError(null);
+    setError('');
+    setUser(null);
 
     try {
       const userData = await fetchUserData(username);
@@ -38,7 +39,7 @@ const Search = () => {
 
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {user && (
+      {user && !error && (
         <div>
           <img src={user.avatar_url} alt={`${user.login}'s avatar`} width="100" />
           <h2>{user.name || user.login}</h2>
