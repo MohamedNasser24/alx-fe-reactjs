@@ -17,8 +17,8 @@ const Search = () => {
       const userData = await fetchUserData(username);
       setUser(userData);
     } catch (err) {
-      // Check the error message to determine if it's a 'not found' error
-      if (err.message === 'User not found') {
+      // Check if the error message indicates that the user was not found
+      if (err.message.includes('User not found')) {
         setError('Looks like we can\'t find the user');
       } else {
         setError('An error occurred while fetching the user data');
@@ -57,5 +57,4 @@ const Search = () => {
 };
 
 export default Search;
-
 
