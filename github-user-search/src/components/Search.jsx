@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
-import './Search.css';
+import './Search.css'; // Import the CSS if you have any styles
 
 const Search = () => {
     const [username, setUsername] = useState('');
@@ -22,6 +22,7 @@ const Search = () => {
             setUser(userData);
         } catch (err) {
             setError('Looks like we can\'t find the user');
+            setUser(null);
         } finally {
             setLoading(false);
         }
@@ -42,8 +43,8 @@ const Search = () => {
             {error && <p>{error}</p>}
             {user && (
                 <div>
-                    <img src={user.avatar_url} alt={user.name} width="100" />
-                    <h2>{user.name}</h2>
+                    <img src={user.avatar_url} alt={user.login} width="100" />
+                    <h2>{user.name || user.login}</h2>
                     <a href={user.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
                 </div>
             )}
@@ -52,7 +53,6 @@ const Search = () => {
 };
 
 export default Search;
-
 
 
 
