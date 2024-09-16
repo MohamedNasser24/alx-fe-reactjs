@@ -4,7 +4,7 @@ import axios from 'axios';
 const BASE_URL = 'https://api.github.com/search/users';
 
 /**
- * Fetch user data from GitHub based on search criteria.
+ * Fetch user data from GitHub based on advanced search criteria.
  *
  * @param {string} username - The GitHub username to search for.
  * @param {string} [location=''] - The location to filter by (optional).
@@ -13,7 +13,7 @@ const BASE_URL = 'https://api.github.com/search/users';
  */
 export const fetchUserData = async (username, location = '', minRepos = '') => {
     try {
-        // Base query with the username
+        // Construct the query part for the API request
         let query = `user:${username}`;
         
         // Append location if provided
@@ -26,11 +26,16 @@ export const fetchUserData = async (username, location = '', minRepos = '') => {
             query += ` repos:>${minRepos}`;
         }
 
-        // Construct the full API URL with the query
-        const url = `${BASE_URL}?q=${encodeURIComponent(query)}`;
+        // Encode the query for the URL
+        const encodedQuery = encodeURIComponent(query);
 
-        // Make a GET request to the GitHub Search API
+        // Construct the full API URL
+        const url = `${BASE_URL}?q=${encodedQuery}`;
+
+        // Make a GET request to GitHub's Search API
         const response = await axios.get(url);
+
+        // Return the data from the response
         return response.data;
     } catch (error) {
         // Log and throw an error if something goes wrong
