@@ -1,25 +1,28 @@
 import axios from 'axios';
 
-// Base URL for GitHub API
-const BASE_URL = 'https://api.github.com/users/';
+// Base URL for GitHub Search API
+const BASE_URL = 'https://api.github.com/search/users';
 
 /**
- * Fetches user data from the GitHub API based on the provided username.
+ * Fetches user data from the GitHub API based on the provided search criteria.
  *
  * @param {string} username - The GitHub username to search for.
- * @returns {Promise<Object>} - A promise that resolves to the user data.
+ * @param {string} location - The location to filter users by.
+ * @param {number} minRepos - Minimum number of repositories to filter users by.
+ * @returns {Promise<Object>} - A promise that resolves to the search results.
  * @throws {Error} - Throws an error if the request fails.
  */
-export const fetchUserData = async (username) => {
+export const fetchUserData = async (username, location = '', minRepos = '') => {
   try {
-    // Use Axios to make a GET request to the GitHub API
-    const response = await axios.get(`${BASE_URL}${username}`);
-    return response.data; // Return the user data from the response
+    // Construct query parameters
+    let query = `user:${username}`;
+    if (location) query += ` location:${location}`;
+    if (minRepos) query += ` repos:>${minRepos}`;
+
+    const response = await axios.get(`${BASE_URL}?q=${encodeURIComponent(query)}`);
+    return response.data; // Return the search results from the response
   } catch (error) {
-    // Handle different error scenarios
-    if (error.response && error.response.status === 404) {
-      throw new Error('User not found'); // Specific error for 404 Not Found
-    }
-    throw new Error('Error fetching user data'); // Generic error message
+    // Handle errors
+    throw new Error('Error fetching user data');
   }
 };
