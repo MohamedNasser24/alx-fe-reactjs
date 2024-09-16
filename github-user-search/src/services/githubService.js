@@ -15,7 +15,7 @@ export const fetchUserData = async (username, location = '', minRepos = '') => {
             query += ` repos:>${minRepos}`;
         }
 
-        // Encode the query to ensure it is URL-safe
+        // Make a request to the GitHub Search API with the constructed query
         const response = await axios.get(`${BASE_URL}?q=${encodeURIComponent(query)}`);
         return response.data;
     } catch (error) {
