@@ -49,12 +49,19 @@ const Search = () => {
             </form>
             {loading && <p className="text-gray-500">Loading...</p>}
             {error && <p className="text-red-500">{error}</p>}
-            {user && (
-                <div className="flex items-center space-x-4">
+            {user && !loading && !error && (
+                <div className="flex items-center space-x-4 mt-4">
                     <img src={user.avatar_url} alt={user.login} className="w-12 h-12 rounded-full" />
                     <div>
                         <h3 className="text-lg font-semibold">{user.login}</h3>
-                        <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">View Profile</a>
+                        <a
+                            href={user.html_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                        >
+                            View Profile
+                        </a>
                     </div>
                 </div>
             )}
@@ -63,7 +70,6 @@ const Search = () => {
 };
 
 export default Search;
-
 
 
 
