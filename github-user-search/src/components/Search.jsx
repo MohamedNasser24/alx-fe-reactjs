@@ -1,3 +1,4 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
@@ -5,23 +6,31 @@ const Search = () => {
     const [username, setUsername] = useState('');
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
 
+    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
-        setError(null);
+        setError('');
         try {
             const data = await fetchUserData(username);
-            setUser(data);
+            if (data) {
+                setUser(data);
+            } else {
+                setError('Looks like we can’t find the user');
+                setUser(null);
+            }
         } catch (err) {
-            setError('Looks like we can\'t find the user');
+            setError('Looks like we can’t find the user');
+            setUser(null);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleInputChange = (event) => {
+    // Handle input change
+    const handleChange = (event) => {
         setUsername(event.target.value);
     };
 
@@ -29,26 +38,23 @@ const Search = () => {
         <div className="search-container">
             <h1>GitHub User Search</h1>
             <form onSubmit={handleSubmit} className="search-form">
-                <div>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        value={username}
-                        onChange={handleInputChange}
-                        placeholder="Enter GitHub username"
-                    />
-                </div>
-                <button type="submit" disabled={loading}>Search</button>
+                <input
+                    type="text"
+                    value={username}
+                    onChange={handleChange}
+                    placeholder="Enter GitHub username"
+                    className="input-field"
+                />
+                <button type="submit" disabled={loading} className="submit-button">
+                    {loading ? 'Loading...' : 'Search'}
+                </button>
             </form>
 
-            {loading && <p>Loading...</p>}
-
-            {error && <p>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
             {user && (
                 <div className="user-info">
-                    <img src={user.avatar_url} alt={user.login} width="100" />
+                    <img src={user.avatar_url} alt={user.login} className="avatar" />
                     <h2>{user.name}</h2>
                     <a href={user.html_url} target="_blank" rel="noopener noreferrer">
                         {user.login}
