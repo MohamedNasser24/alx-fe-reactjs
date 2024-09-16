@@ -21,13 +21,15 @@ export const fetchUserData = async (username, location = '', minRepos = '', page
     if (location) query += ` location:${location}`;
     if (minRepos) query += ` repos:>${minRepos}`;
 
-    // Make the API request with query and pagination parameters
+    // Make the API request
     const response = await axios.get(`${BASE_URL}?q=${encodeURIComponent(query)}&page=${page}&per_page=10`);
     
-    // Return the results from the API response
+    // Return the data from the response
     return response.data;
   } catch (error) {
-    // Handle any errors during the request
+    // Handle any errors
+    console.error('Error details:', error);
     throw new Error('Error fetching user data: ' + error.message);
   }
 };
+
