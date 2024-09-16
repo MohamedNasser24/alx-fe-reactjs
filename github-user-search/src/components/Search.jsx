@@ -1,10 +1,9 @@
-// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
 const Search = () => {
     const [username, setUsername] = useState('');
-    const [user, setUser] = useState(null);
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -15,15 +14,15 @@ const Search = () => {
         setError('');
         try {
             const data = await fetchUserData(username);
-            if (data) {
-                setUser(data);
+            if (data && data.length > 0) {
+                setUsers(data);
             } else {
                 setError('Looks like we can’t find the user');
-                setUser(null);
+                setUsers([]);
             }
         } catch (err) {
             setError('Looks like we can’t find the user');
-            setUser(null);
+            setUsers([]);
         } finally {
             setLoading(false);
         }
@@ -52,13 +51,17 @@ const Search = () => {
 
             {error && <p className="error-message">{error}</p>}
 
-            {user && (
-                <div className="user-info">
-                    <img src={user.avatar_url} alt={user.login} className="avatar" />
-                    <h2>{user.name}</h2>
-                    <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-                        {user.login}
-                    </a>
+            {users.length > 0 && (
+                <div className="user-list">
+                    {users.map(user => (
+                        <div key={user.id} className="user-info">
+                            <img src={user.avatar_url} alt={user.login} className="avatar" />
+                            <h2>{user.name || user.login}</h2>
+                            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                                {user.login}
+                            </a>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
