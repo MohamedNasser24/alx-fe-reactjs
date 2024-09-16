@@ -41,7 +41,7 @@ function Search() {
       </form>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {user && (
+      {user && !error && (
         <div className="user-profile">
           <img src={user.avatar_url} alt={user.login} />
           <h2>{user.login}</h2>
@@ -54,6 +54,7 @@ function Search() {
 }
 
 export default Search;
+
 
 
 

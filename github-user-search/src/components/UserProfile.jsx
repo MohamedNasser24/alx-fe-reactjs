@@ -14,3 +14,4 @@ function UserProfile({ user }) {
 }
 
 export default UserProfile;
+
