@@ -1,50 +1,25 @@
 import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import { fetchUserData } from './githubService';
 
-// Create a new instance of axios-mock-adapter
-const mock = new MockAdapter(axios);
+// Base URL for GitHub API
+const BASE_URL = 'https://api.github.com/users/';
 
-describe('fetchUserData', () => {
-  afterEach(() => {
-    mock.reset(); // Reset mock after each test
-  });
-
-  it('should fetch user data successfully', async () => {
-    const mockUsername = 'octocat';
-    const mockData = {
-      login: 'octocat',
-      id: 1,
-      avatar_url: 'https://avatars.githubusercontent.com/u/583231?v=4',
-      html_url: 'https://github.com/octocat',
-      name: 'The Octocat',
-    };
-
-    // Set up mock response
-    mock.onGet(`https://api.github.com/users/${mockUsername}`).reply(200, mockData);
-
-    // Call the function and verify response
-    const result = await fetchUserData(mockUsername);
-    expect(result).toEqual(mockData);
-  });
-
-  it('should handle 404 error', async () => {
-    const mockUsername = 'nonexistentuser';
-
-    // Set up mock response for 404
-    mock.onGet(`https://api.github.com/users/${mockUsername}`).reply(404);
-
-    // Verify that the function throws the expected error
-    await expect(fetchUserData(mockUsername)).rejects.toThrow('User not found');
-  });
-
-  it('should handle other errors', async () => {
-    const mockUsername = 'erroruser';
-
-    // Set up mock response for a different error
-    mock.onGet(`https://api.github.com/users/${mockUsername}`).networkError();
-
-    // Verify that the function throws a generic error
-    await expect(fetchUserData(mockUsername)).rejects.toThrow('Error fetching user data');
-  });
-});
+/**
+ * Fetches user data from the GitHub API based on the provided username.
+ *
+ * @param {string} username - The GitHub username to search for.
+ * @returns {Promise<Object>} - A promise that resolves to the user data.
+ * @throws {Error} - Throws an error if the request fails.
+ */
+export const fetchUserData = async (username) => {
+  try {
+    // Use Axios to make a GET request to the GitHub API
+    const response = await axios.get(`${BASE_URL}${username}`);
+    return response.data; // Return the user data from the response
+  } catch (error) {
+    // Handle different error scenarios
+    if (error.response && error.response.status === 404) {
+      throw new Error('User not found'); // Specific error for 404 Not Found
+    }
+    throw new Error('Error fetching user data'); // Generic error message
+  }
+};
