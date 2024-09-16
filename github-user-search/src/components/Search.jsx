@@ -1,4 +1,3 @@
-// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
@@ -18,8 +17,12 @@ const Search = () => {
       const userData = await fetchUserData(username);
       setUser(userData);
     } catch (err) {
-      // Set a specific error message if the user is not found
-      setError(err.message === 'User not found' ? 'Looks like we can\'t find the user' : 'An error occurred');
+      // Check the error message to determine if it's a 'not found' error
+      if (err.message === 'User not found') {
+        setError('Looks like we can\'t find the user');
+      } else {
+        setError('An error occurred while fetching the user data');
+      }
       setUser(null);
     } finally {
       setLoading(false);
