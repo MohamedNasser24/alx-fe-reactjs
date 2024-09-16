@@ -1,16 +1,12 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.github.com/users';
+const BASE_URL = 'https://api.github.com/search/users';
 
-export const fetchUserData = async (username) => {
+export const fetchUserData = async (query) => {
     try {
-        const response = await axios.get(`${BASE_URL}/${username}`);
+        const response = await axios.get(`${BASE_URL}?q=${encodeURIComponent(query)}`);
         return response.data;
     } catch (error) {
-        // Handle errors specifically for user not found (404) or other errors
-        if (error.response && error.response.status === 404) {
-            throw new Error('User not found');
-        }
-        throw new Error('An error occurred');
+        throw new Error('An error occurred while fetching user data');
     }
 };
