@@ -31,3 +31,4 @@ export const fetchUsersByQuery = async (query, location = '', minRepos = 0) => {
         throw new Error(error.response ? error.response.data.message : 'Error fetching data');
     }
 };
+
