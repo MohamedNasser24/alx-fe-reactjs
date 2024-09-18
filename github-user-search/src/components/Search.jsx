@@ -17,8 +17,8 @@ const Search = () => {
             const data = await fetchUserData(username);
             setUserData(data);
         } catch (err) {
-            // Handle user not found error
-            setError("Looks like we can't find the user."); // This line sets the specific error message
+            // This is where we set the specific error message
+            setError("Looks like we can't find the user."); // Ensure this line is present
         } finally {
             setLoading(false);
         }
@@ -37,7 +37,7 @@ const Search = () => {
             </form>
 
             {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>} {/* Displays the error message */}
+            {error && <p>{error}</p>} {/* Display the error message */}
             {userData && (
                 <div>
                     <h2>{userData.name || userData.login}</h2>
