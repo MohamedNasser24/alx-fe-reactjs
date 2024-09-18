@@ -1,26 +1,76 @@
+// src/components/Search.test.jsx
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import Search from './Search';
-import { fetchUserData } from '../services/githubService';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
-// Mock the fetchUserData function
-jest.mock('../services/githubService');
+const mock = new MockAdapter(axios);
 
 describe('Search Component', () => {
-  it('should display error message when user is not found', async () => {
-    fetchUserData.mockRejectedValue(new Error('User not found'));
-
-    render(<Search />);
-
-    fireEvent.change(screen.getByPlaceholderText(/enter github username/i), {
-      target: { value: 'nonexistentuser' },
+    afterEach(() => {
+        mock.reset(); // Reset mock after each test
     });
 
-    fireEvent.click(screen.getByText(/search/i));
+    it('calls the GitHub API and displays user data', async () => {
+        // Arrange
+        const mockUser = {
+            login: 'octocat',
+            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+            html_url: 'https://github.com/octocat',
+            name: 'The Octocat',
+        };
 
-    await waitFor(() => {
-      expect(screen.getByText("Looks like we can't find the user")).toBeInTheDocument();
+        // Mock the API response
+        mock.onGet('https://api.github.com/users/octocat').reply(200, mockUser);
+
+        render(<Search />);
+
+        // Act
+        fireEvent.change(screen.getByPlaceholderText(/enter github username/i), {
+            target: { value: 'octocat' },
+        });
+        fireEvent.click(screen.getByText(/search/i));
+
+        // Assert
+        await waitFor(() => expect(screen.getByText(/the octocat/i)).toBeInTheDocument());
+        expect(screen.getByRole('img')).toHaveAttribute('src', mockUser.avatar_url);
+        expect(screen.getByText(/view profile/i)).toHaveAttribute('href', mockUser.html_url);
     });
-  });
+
+    it('handles user not found', async () => {
+        // Arrange
+        mock.onGet('https://api.github.com/users/nonexistentuser').reply(404);
+
+        render(<Search />);
+
+        // Act
+        fireEvent.change(screen.getByPlaceholderText(/enter github username/i), {
+            target: { value: 'nonexistentuser' },
+        });
+        fireEvent.click(screen.getByText(/search/i));
+
+        // Assert
+        await waitFor(() => expect(screen.getByText(/looks like we can't find the user/i)).toBeInTheDocument());
+    });
+
+    it('displays loading state while fetching', async () => {
+        // Arrange
+        mock.onGet('https://api.github.com/users/octocat').reply(200, {
+            login: 'octocat',
+        });
+
+        render(<Search />);
+
+        // Act
+        fireEvent.change(screen.getByPlaceholderText(/enter github username/i), {
+            target: { value: 'octocat' },
+        });
+        fireEvent.click(screen.getByText(/search/i));
+
+        // Assert
+        expect(screen.getByText(/loading.../i)).toBeInTheDocument();
+        await waitFor(() => expect(screen.queryByText(/loading.../i)).not.toBeInTheDocument());
+    });
 });
+
