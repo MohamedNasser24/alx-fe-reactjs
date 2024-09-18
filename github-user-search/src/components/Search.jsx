@@ -17,12 +17,8 @@ const Search = () => {
             const data = await fetchUserData(username);
             setUserData(data);
         } catch (err) {
-            // Check if the error response is due to user not found
-            if (err.response && err.response.status === 404) {
-                setError("Looks like we can't find the user.");
-            } else {
-                setError("An error occurred. Please try again.");
-            }
+            // Handle not found error
+            setError("Looks like we can't find the user."); // Error message included
         } finally {
             setLoading(false);
         }
