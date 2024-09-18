@@ -1,3 +1,4 @@
+// src/components/Search.jsx
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
@@ -10,15 +11,15 @@ const Search = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
+        setError(null); // Reset error state
         setUserData(null); // Clear previous user data
 
         try {
             const data = await fetchUserData(username);
             setUserData(data);
         } catch (err) {
-            // This is where we set the specific error message
-            setError("Looks like we can't find the user."); // Ensure this line is present
+            // This line sets the specific error message
+            setError("Looks like we can't find the user."); // Ensure this line is included
         } finally {
             setLoading(false);
         }
@@ -37,7 +38,7 @@ const Search = () => {
             </form>
 
             {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>} {/* Display the error message */}
+            {error && <p>{error}</p>} {/* This will display the error message */}
             {userData && (
                 <div>
                     <h2>{userData.name || userData.login}</h2>
