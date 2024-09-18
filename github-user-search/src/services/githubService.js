@@ -6,7 +6,7 @@ const GITHUB_API_URL = 'https://api.github.com/search/users';
 /**
  * Fetch users from GitHub based on the search criteria.
  *
- * @param {string} username - The GitHub username to search for.
+ * @param {string} username - The GitHub username to search for (optional).
  * @param {string} location - The location to filter users (optional).
  * @param {number} minRepos - The minimum number of repositories (optional).
  * @param {number} page - The page number for pagination (default is 1).
@@ -28,8 +28,9 @@ export const fetchUsers = async (username, location, minRepos, page = 1) => {
     // Join the parameters into a single query string
     const query = params.join(' ');
 
-    // Construct the API request with pagination
+    // Construct the API request
     const response = await axios.get(`${GITHUB_API_URL}?q=${encodeURIComponent(query)}&page=${page}&per_page=30`);
     
     return response.data; // Return the search results
 };
+
