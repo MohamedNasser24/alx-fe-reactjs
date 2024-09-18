@@ -19,3 +19,4 @@ export const fetchUsersByQuery = async (query) => {
         throw new Error(error.response ? error.response.data.message : 'Error fetching data');
     }
 };
+
