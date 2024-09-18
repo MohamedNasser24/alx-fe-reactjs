@@ -11,15 +11,19 @@ const Search = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null); // Reset error state
-        setUserData(null); // Clear previous user data
+        setError(null);
+        setUserData(null);
 
         try {
             const data = await fetchUserData(username);
             setUserData(data);
         } catch (err) {
-            // This line sets the specific error message
-            setError("Looks like we can't find the user."); // Ensure this line is included
+            // Handle specific error cases
+            if (err.response && err.response.status === 404) {
+                setError("Looks like we can't find the user.");
+            } else {
+                setError("An error occurred. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
@@ -38,7 +42,7 @@ const Search = () => {
             </form>
 
             {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>} {/* This will display the error message */}
+            {error && <p>{error}</p>}
             {userData && (
                 <div>
                     <h2>{userData.name || userData.login}</h2>
