@@ -1,51 +1,43 @@
 import React, { useState } from 'react';
-import { fetchUsersByQuery } from '../services/githubService';
+import { fetchUserData, fetchUsersByQuery } from '../services/githubService';
 
 const Search = () => {
-    const [query, setQuery] = useState('');
-    const [users, setUsers] = useState([]);
+    const [username, setUsername] = useState('');
+    const [user, setUser] = useState(null);
     const [error, setError] = useState('');
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        setError('');
+    const handleSearch = async () => {
         try {
-            const data = await fetchUsersByQuery(query);
-            setUsers(data);
+            const userData = await fetchUserData(username);
+            setUser(userData);
+            setError('');
         } catch (err) {
-            setError('Looks like we can’t find any users');
-            setUsers([]); // Clear previous results on error
+            setError(err.message);
+            setUser(null);
         }
     };
 
     return (
         <div>
-            <form onSubmit={handleSearch}>
-                <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search GitHub users"
-                />
-                <button type="submit">Search</button>
-            </form>
+            <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter GitHub username"
+            />
+            <button onClick={handleSearch}>Search</button>
             {error && <p>{error}</p>}
-            <div>
-                {users.length > 0 ? (
-                    users.map((user) => (
-                        <div key={user.id}>
-                            <img src={user.avatar_url} alt={`${user.login}'s avatar`} />
-                            <h2>{user.login}</h2>
-                            <a href={user.html_url} target="_blank" rel="noopener noreferrer">Profile</a>
-                        </div>
-                    ))
-                ) : (
-                    <p>No users found.</p>
-                )}
-            </div>
+            {user && (
+                <div>
+                    <h2>{user.login}</h2>
+                    <img src={user.avatar_url} alt={`${user.login}'s avatar`} />
+                    <a href={user.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
+                </div>
+            )}
         </div>
     );
 };
 
 export default Search;
+
 
