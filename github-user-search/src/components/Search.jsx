@@ -9,14 +9,14 @@ const Search = () => {
     const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevents the default form submission behavior
+        e.preventDefault(); // Prevent the default form submission behavior
         setLoading(true);
-        setError('');
+        setError(''); // Clear previous errors
         try {
             const userData = await fetchUserData(username);
             setUser(userData);
         } catch (err) {
-            setError("Looks like we can't find the user");
+            setError("Looks like we can't find the user"); // Specific error message
             setUser(null);
         } finally {
             setLoading(false);
@@ -35,7 +35,7 @@ const Search = () => {
                 <button type="submit">Search</button>
             </form>
             {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
+            {error && <p>{error}</p>} {/* Display error message */}
             {user && (
                 <div>
                     <h2>{user.name || user.login}</h2>
@@ -48,6 +48,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
