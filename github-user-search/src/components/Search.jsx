@@ -5,17 +5,17 @@ const Search = () => {
     const [username, setUsername] = useState('');
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(''); // Step 1: Initialize error state
+    const [error, setError] = useState(''); // Step 1: Error state
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(''); // Reset error state
+        setError(''); // Reset error message
         try {
             const data = await fetchUserData(username);
             setUserData(data);
         } catch (err) {
-            setError("Looks like we can't find the user"); // Step 2: Set error message
+            setError("Looks like we can't find the user"); // Step 2: Error message
             setUserData(null); // Clear previous user data
         } finally {
             setLoading(false);
@@ -38,7 +38,7 @@ const Search = () => {
             {userData && (
                 <div>
                     <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
-                    <h3>{userData.login}</h3>
+                    <h3>{userData.login}</h3> {/* Display username (login) */}
                     <a href={userData.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
                 </div>
             )}
@@ -47,6 +47,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
