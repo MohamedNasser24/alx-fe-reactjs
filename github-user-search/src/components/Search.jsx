@@ -10,14 +10,14 @@ const Search = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError('');
+        setError(''); // Clear any previous error message
 
         try {
             const data = await fetchUserData(username);
             setUserData(data);
-        } catch {
-            setError("Looks like we can't find the user");
-            setUserData(null);
+        } catch (err) {
+            setError("Looks like we can't find the user"); // Set the error message
+            setUserData(null); // Clear user data if there's an error
         } finally {
             setLoading(false);
         }
@@ -35,8 +35,8 @@ const Search = () => {
                 <button type="submit">Search</button>
             </form>
 
-            {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
+            {loading && <p>Loading...</p>} {/* Show loading message */}
+            {error && <p>{error}</p>} {/* Show error message */}
             {userData && (
                 <div>
                     <img 
@@ -59,6 +59,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
