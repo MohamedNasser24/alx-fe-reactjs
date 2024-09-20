@@ -16,6 +16,7 @@ const Search = () => {
             setUserData(data);
         } catch (err) {
             setError('Looks like we can\'t find the user');
+            setUserData(null); // Clear previous user data
         } finally {
             setLoading(false);
         }
@@ -36,8 +37,8 @@ const Search = () => {
             {error && <p>{error}</p>}
             {userData && (
                 <div>
-                    <img src={userData.avatar_url} alt={`${userData.name}'s avatar`} width="100" />
-                    <h3>{userData.name}</h3>
+                    <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} width="100" />
+                    <h3>{userData.login}</h3> {/* Display the username (login) */}
                     <a href={userData.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
                 </div>
             )}
@@ -46,6 +47,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
