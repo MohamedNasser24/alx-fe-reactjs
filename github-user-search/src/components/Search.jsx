@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
+import { fetchUserData } from '../services/githubService'; // Import the service
 
 const Search = () => {
     const [username, setUsername] = useState('');
@@ -9,17 +9,18 @@ const Search = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        setError(''); // Clear any previous error message
+        setLoading(true); // Set loading state
+        setError(''); // Reset any previous error
 
         try {
-            const data = await fetchUserData(username);
-            setUserData(data);
+            const data = await fetchUserData(username); // Fetch user data
+            setUserData(data); // Set user data to state
         } catch (err) {
-            setError("Looks like we can't find the user"); // Set the error message
+            // Handle error by setting an error message
+            setError("Looks like we can't find the user");
             setUserData(null); // Clear user data if there's an error
         } finally {
-            setLoading(false);
+            setLoading(false); // Reset loading state
         }
     };
 
@@ -44,7 +45,7 @@ const Search = () => {
                         alt={`${userData.login}'s avatar`} 
                         width="100" 
                     />
-                    <h3>{userData.login}</h3>
+                    <h3>{userData.login}</h3> {/* Display username */}
                     <a 
                         href={userData.html_url} 
                         target="_blank" 
@@ -59,6 +60,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
