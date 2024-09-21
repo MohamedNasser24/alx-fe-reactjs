@@ -16,11 +16,11 @@ const Search = () => {
             const data = await fetchUserData(username);
             setUserData(data);
         } catch (err) {
-            // Check if the error is a 404 error
+            // Handle user not found error
             if (err.response && err.response.status === 404) {
-                setError("Looks like we can't find the user"); // Set error message
+                setError("Looks like we can't find the user"); // Error message for user not found
             } else {
-                setError("An error occurred. Please try again."); // Generic error message
+                setError("An error occurred. Please try again."); // Generic error message for other issues
             }
             setUserData(null); // Clear previous user data
         } finally {
