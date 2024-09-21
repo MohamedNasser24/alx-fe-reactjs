@@ -12,19 +12,19 @@ const Search = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(''); // Clear previous error message
+        setError('');
 
         try {
             const data = await fetchUserData(username, location, minRepos);
             if (data.length === 0) {
-                throw new Error("No users found"); // Handle case with no results
+                throw new Error("No users found");
             }
             setUserData(data);
         } catch (err) {
-            setError("Looks like we cant find the user"); // Set the error message
-            setUserData([]); // Clear previous user data
+            setError("Looks like we cant find the user");
+            setUserData([]);
         } finally {
-            setLoading(false); // Reset loading state
+            setLoading(false);
         }
     };
 
@@ -37,6 +37,7 @@ const Search = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter GitHub username"
                     className="border p-2 rounded"
+                    required
                 />
                 <input
                     type="text"
@@ -57,19 +58,21 @@ const Search = () => {
                 </button>
             </form>
 
-            {loading && <p>Loading...</p>} {/* Show loading message */}
-            {error && <p>{error}</p>} {/* Display error message */}
+            {loading && <p>Loading...</p>}
+            {error && <p className="text-red-500">{error}</p>}
             {userData.length > 0 && (
                 <div className="mt-4">
-                    {userData.map(user => (
-                        <div key={user.id} className="border-b py-2">
+                    {userData.map((user) => (
+                        <div key={user.id} className="border-b py-2 flex items-center space-x-2">
                             <img src={user.avatar_url} alt={user.login} className="w-10 h-10 rounded" />
-                            <h3 className="font-bold">{user.login}</h3>
-                            <p>Location: {user.location || 'N/A'}</p>
-                            <p>Repositories: {user.public_repos || 0}</p>
-                            <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-                                View Profile
-                            </a>
+                            <div>
+                                <h3 className="font-bold">{user.login}</h3>
+                                <p>Location: {user.location || 'N/A'}</p>
+                                <p>Repositories: {user.public_repos || 0}</p>
+                                <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+                                    View Profile
+                                </a>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -79,6 +82,7 @@ const Search = () => {
 };
 
 export default Search;
+
 
 
 
