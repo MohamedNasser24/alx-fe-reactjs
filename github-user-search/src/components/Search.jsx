@@ -1,3 +1,5 @@
+// src/components/Search.jsx
+
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
@@ -16,10 +18,10 @@ const Search = () => {
 
         try {
             const data = await fetchUserData(username, location, minRepos);
-            if (data.length === 0) {
-                throw new Error("No users found"); // Handle case with no results
+            if (data.items.length === 0) { // Check for no users found
+                throw new Error("No users found");
             }
-            setUserData(data);
+            setUserData(data.items); // Set user data to the items array
         } catch (err) {
             setError("Looks like we can't find the user"); // Set the error message
             setUserData([]); // Clear previous user data
@@ -37,6 +39,7 @@ const Search = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter GitHub username"
                     className="border p-2 rounded"
+                    required
                 />
                 <input
                     type="text"
@@ -58,7 +61,7 @@ const Search = () => {
             </form>
 
             {loading && <p>Loading...</p>} {/* Show loading message */}
-            {error && <p>{error}</p>} {/* Display error message */}
+            {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
             {userData.length > 0 && (
                 <div className="mt-4">
                     {userData.map(user => (
