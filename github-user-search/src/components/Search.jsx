@@ -3,26 +3,26 @@ import { fetchUserData } from '../services/githubService';
 
 const Search = () => {
     const [username, setUsername] = useState('');
-    const [userData, setUserData] = useState(null);
+    const [location, setLocation] = useState('');
+    const [minRepos, setMinRepos] = useState('');
+    const [userData, setUserData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(''); // Clear any previous error message
+        setError(''); // Clear previous error message
 
         try {
-            const data = await fetchUserData(username);
+            const data = await fetchUserData(username, location, minRepos);
+            if (data.length === 0) {
+                throw new Error("No users found"); // Handle case with no results
+            }
             setUserData(data);
         } catch (err) {
-            // Handle user not found error
-            if (err.response && err.response.status === 404) {
-                setError("Looks like we can't find the user"); // Error message for user not found
-            } else {
-                setError("An error occurred. Please try again."); // Generic error message for other issues
-            }
-            setUserData(null); // Clear previous user data
+            setError("Looks like we can't find the user"); // Set the error message
+            setUserData([]); // Clear previous user data
         } finally {
             setLoading(false); // Reset loading state
         }
@@ -37,7 +37,20 @@ const Search = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter GitHub username"
                     className="border p-2 rounded"
-                    required
+                />
+                <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Location"
+                    className="border p-2 rounded"
+                />
+                <input
+                    type="number"
+                    value={minRepos}
+                    onChange={(e) => setMinRepos(e.target.value)}
+                    placeholder="Minimum Repositories"
+                    className="border p-2 rounded"
                 />
                 <button type="submit" className="bg-blue-500 text-white p-2 rounded">
                     Search
@@ -45,16 +58,20 @@ const Search = () => {
             </form>
 
             {loading && <p>Loading...</p>} {/* Show loading message */}
-            {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
-            {userData && (
+            {error && <p>{error}</p>} {/* Display error message */}
+            {userData.length > 0 && (
                 <div className="mt-4">
-                    <img src={userData.avatar_url} alt={userData.login} className="w-20 h-20 rounded" />
-                    <h3 className="font-bold">{userData.name || userData.login}</h3>
-                    <p>
-                        <a href={userData.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
-                            View Profile
-                        </a>
-                    </p>
+                    {userData.map(user => (
+                        <div key={user.id} className="border-b py-2">
+                            <img src={user.avatar_url} alt={user.login} className="w-10 h-10 rounded" />
+                            <h3 className="font-bold">{user.login}</h3>
+                            <p>Location: {user.location || 'N/A'}</p>
+                            <p>Repositories: {user.public_repos || 0}</p>
+                            <a href={user.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+                                View Profile
+                            </a>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
@@ -62,7 +79,6 @@ const Search = () => {
 };
 
 export default Search;
-
 
 
 
